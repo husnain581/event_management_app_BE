@@ -51,6 +51,16 @@ class Api::EventsController < ApplicationController
     end
   end
 
+  def get_events
+    events = Event.left_outer_joins(:event_users).where.not('event_users.user_id': current_user.id).or(
+             Event.where('event_users.user_id': nil)).distinct
+    if events.present?
+      render json: events
+    else
+      render json: "No events found"
+    end
+  end
+
   def joined_events
     events = current_user.events
     render json: events
