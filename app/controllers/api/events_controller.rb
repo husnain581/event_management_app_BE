@@ -37,6 +37,25 @@ class Api::EventsController < ApplicationController
    head :no_content
   end
 
+  def add_user_to_events
+    event = Event.find_by(id: params["event_id"])
+    if event.present?
+      event_users = EventUser.new(event_id: event.id, user_id: current_user.id)
+      if event_users.save
+        render json: event_users, status: :created
+      else
+        render json: event_users.errors, status: :unprocessable_entity
+      end
+    else
+     render json: "Event Not Found", status: :unprocessable_entity
+    end
+  end
+
+  def joined_events
+    events = current_user.events
+    render json: events
+  end
+
   private
 
   def set_event
