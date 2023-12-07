@@ -27,4 +27,72 @@ RSpec.describe Event, type: :model do
       expect(event.users.count).to eq(3)
     end
   end
+
+  describe 'scopes' do
+    let(:user) { create(:user) }
+
+    describe 'organized_by_user' do
+      it 'returns events organized by the specified user' do
+        event = create(:event, organizer: user)
+        
+        result = Event.organized_by_user(user)
+
+        expect(result).to include(event)
+      end
+
+      it 'does not return events organized by other users' do
+        other_user = create(:user)
+        event = create(:event, organizer: other_user)
+
+        result = Event.organized_by_user(user)
+
+        expect(result).not_to include(event)
+      end
+    end
+
+    describe 'not_organized_by_user' do
+      it 'returns events not organized by the specified user' do
+        event = create(:event)
+
+        result = Event.not_organized_by_user(user)
+
+        expect(result).to include(event)
+      end
+
+      it 'does not return events organized by the specified user' do
+        event = create(:event, organizer: user)
+
+        result = Event.not_organized_by_user(user)
+
+        expect(result).not_to include(event)
+      end
+    end
+
+    describe 'not_joined_by_user' do
+      it 'returns events not joined by the specified user' do
+        event = create(:event)
+        create(:event_user, event: event, user: user)
+
+        result = Event.not_joined_by_user(user)
+
+        expect(result).not_to include(event)
+      end
+
+      it 'returns events not joined by any user' do
+        event = create(:event)
+
+        result = Event.not_joined_by_user(user)
+
+        expect(result).to include(event)
+      end
+
+      it 'does not return events joined by the specified user' do
+        event = create(:event, organizer: user)
+
+        result = Event.not_joined_by_user(user).not_organized_by_user(user)
+
+        expect(result).not_to include(event)
+      end
+    end
+  end
 end

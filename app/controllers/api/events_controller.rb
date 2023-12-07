@@ -1,13 +1,18 @@
 # frozen_string_literal: false
 
 class Api::EventsController < ApplicationController 
+  include ExceptionHandler
   before_action :authenticate_user!
   before_action :set_event, only: [:show, :update, :destroy]
   respond_to :json
 
   def index
-    events = Event.where(organizer_id: current_user.id)
-    render json: events
+    user_organized_events = Event.organized_by_user(current_user)
+    if user_organized_events.present?
+      render json: user_organized_events
+    else
+      render json: 'events not found'
+    end
   end
 
   def create
@@ -38,6 +43,7 @@ class Api::EventsController < ApplicationController
   end
 
   def add_user_to_events
+    rasie ActionController::ParameterMissing unless params["event_id"].present?
     event = Event.find_by(id: params["event_id"])
     if event.present?
       event_users = EventUser.new(event_id: event.id, user_id: current_user.id)
@@ -52,10 +58,9 @@ class Api::EventsController < ApplicationController
   end
 
   def get_events
-    events = Event.left_outer_joins(:event_users).where.not('event_users.user_id': current_user.id).or(
-             Event.where('event_users.user_id': nil)).distinct
-    if events.present?
-      render json: events
+    not_joined_events = Event.not_joined_by_user(current_user).not_organized_by_user(current_user)
+    if not_joined_events.present?
+      render json: not_joined_events
     else
       render json: "No events found"
     end
