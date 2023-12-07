@@ -15,7 +15,7 @@ class Api::EventsController < ApplicationController
     if event.save
       render json: event, status: :created
     else
-      render json: @event.errors, status: :unprocessable_entity
+      render json: event.errors, status: :unprocessable_entity
     end
   end
 
@@ -63,7 +63,11 @@ class Api::EventsController < ApplicationController
 
   def joined_events
     events = current_user.events
-    render json: events
+    if events.present?
+      render json: events
+    else
+      render json: "No events found"
+    end
   end
 
   private
