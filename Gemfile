@@ -47,6 +47,7 @@ group :development, :test do
   gem 'faker'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
+  gem 'jsonapi-rspec'
 end
 
 group :development do

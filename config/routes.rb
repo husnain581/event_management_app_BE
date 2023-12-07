@@ -9,14 +9,14 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   namespace :api do
-    resources :events do
-      member do
+    namespace :v1 do
+      resources :events do
+        collection do
+          post 'add_user_to_events', to: 'events#add_user_to_events' 
+          get 'get_events', to: 'events#get_events'
+          get 'joined_events', to: 'events#joined_events'
+        end 
       end
-      collection do
-        post 'add_user_to_events', to: 'events#add_user_to_events' 
-        get 'get_events', to: 'events#get_events'
-        get 'joined_events', to: 'events#joined_events'
-      end 
     end
   end
 end
