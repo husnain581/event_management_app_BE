@@ -1,89 +1,54 @@
-# README
+# Event Management Application
 
-Things you may want to cover:
+## Introduction
+This Event Management Application is a Ruby on Rails web application designed to simplify the process of creating, viewing, and joining events. It features a user-friendly interface along with an API endpoint for managing event data. This project showcases CRUD operations, authentication, and a clean, responsive UI/UX.
 
-* Ruby version
-3.2.2
+## Technology Stack
+- **Framework:** Ruby on Rails 7.1.2
+- **Language:** Ruby 3.2.2
+- **Database:** PostgreSQL / SQLite
+- **Frontend:** HTML, CSS/SCSS, JavaScript
+- **Testing:** RSpec, FactoryBot, Faker
 
-* Rails version
-7.1.2
+## Features
+- User authentication (Sign up, Log in, Log out) using Devise.
+- Event management (Create, Read, Update, Delete).
+- RESTful API endpoints for event operations.
+- Interactive and responsive user interface.
+- JSON data exchange format for API.
 
-* System dependencies
+## Setup and Installation
+1. **Clone the Repository:**
+   ```bash
+   git clone [repository-url]
+   ```
+2. **Install Dependencies:**
+   ```bash
+   bundle install
+   ```
+3. **Database Setup:**
+   ```bash
+   rails db:create db:migrate
+   ```
+4. **Run the Server:**
+   ```bash
+   rails server
+   ```
 
-* Configuration
+## API Endpoints
+- **User Authentication:** 
+  - Signup: `POST /signup`
+  - Login: `POST /login`
+  - Logout: `DELETE /logout`
+- **Event Operations:** 
+  - List all events: `GET /api/v1/events`
+  - Create new event: `POST /api/v1/events`
+  - Show an event: `GET /api/v1/events/:id`
+  - Update an event: `PUT /api/v1/events/:id`
+  - Delete an event: `DELETE /api/v1/events/:id`
 
-* Database creation
-rails db:setup
-
-* Database initialization
-
-* How to run the test suite
-Run `rspec` at the root of your application
-
-* ...
-
-# Overview
-
-This repo is a rails monolith for Nayya's main application.
-
-This page has instructions to get started on a local dev machine.
-
-# Dependencies
-
-Install prerequisite dependencies before setting up the repo
-
-* ## OS Package Manager
-
-  **macOS**
-
-  [Install homebrew](https://docs.brew.sh/Installation) and then run
-    ```bash
-    brew update
-    brew install gpg libpq imagemagick gnupg
-    ```
-
-  **Debian**
-
-    ```bash
-    sudo apt-get install imagemagick
-    ```
-
-* ## Ruby
-
-  # install ruby
-    rvm install 3.2.2
-    rvm use 3.2.2
-    ```
-
-  See [installing rvm](https://rvm.io/rvm/install) for more details
-
-# Setup
-
-gem install rails -v 7.1.2
-gem uninstall bundler 
-gem install bundler -v 2.4.18
-
-# install ruby dependencies
-bundler install
-
-# database
-rails db:create
-rails db:migrate
-rails db:seed
-
-# Run
-
+## Running Tests
+Execute the following command to run the suite of tests:
 ```bash
-# start rails server
-rails s
-
-# Test
-```bash
-# setup test database
-RAILS_ENV=test rails db:drop
-RAILS_ENV=test rails db:create
-RAILS_ENV=test rails db:migrate
-
-# run all tests
 bundle exec rspec
-
+```
