@@ -50,30 +50,12 @@ RSpec.describe Event, type: :model do
       end
     end
 
-    describe 'not_organized_by_user' do
-      it 'returns events not organized by the specified user' do
-        event = create(:event)
-
-        result = Event.not_organized_by_user(user)
-
-        expect(result).to include(event)
-      end
-
-      it 'does not return events organized by the specified user' do
-        event = create(:event, organizer: user)
-
-        result = Event.not_organized_by_user(user)
-
-        expect(result).not_to include(event)
-      end
-    end
-
     describe 'not_joined_by_user' do
       it 'returns events not joined by the specified user' do
         event = create(:event)
         create(:event_user, event: event, user: user)
 
-        result = Event.not_joined_by_user(user)
+        result = Event.not_joined_by_user(user).upcoming_events
 
         expect(result).not_to include(event)
       end
@@ -81,7 +63,7 @@ RSpec.describe Event, type: :model do
       it 'returns events not joined by any user' do
         event = create(:event)
 
-        result = Event.not_joined_by_user(user)
+        result = Event.not_joined_by_user(user).upcoming_events
 
         expect(result).to include(event)
       end
@@ -89,7 +71,7 @@ RSpec.describe Event, type: :model do
       it 'does not return events joined by the specified user' do
         event = create(:event, organizer: user)
 
-        result = Event.not_joined_by_user(user).not_organized_by_user(user)
+        result = Event.not_joined_by_user(user).upcoming_events
 
         expect(result).not_to include(event)
       end

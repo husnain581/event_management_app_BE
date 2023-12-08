@@ -17,7 +17,10 @@ FactoryBot.define do
       end
 
       after(:create) do |event, evaluator|
-        create_list(:user, evaluator.users_count, events: [event])
+        users = create_list(:user, evaluator.users_count)
+        users.each do |user|
+          create(:event_user, user: user, event: event)
+        end
       end
     end
   end

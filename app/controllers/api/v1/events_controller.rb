@@ -62,7 +62,8 @@ module Api
       end
     
       def get_events
-        not_joined_events = Event.upcoming_events.not_joined_by_user(current_user).not_organized_by_user(current_user)
+        not_joined_events = Event.not_joined_by_user(current_user).upcoming_events
+
         if not_joined_events.present?
           render json: EventSerializer.new(not_joined_events).serializable_hash[:data].pluck(:attributes), status: 200
         else
