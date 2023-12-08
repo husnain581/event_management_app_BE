@@ -9,6 +9,8 @@ class Event < ApplicationRecord
   validates :location, presence: true
   validates :organizer, presence: true
 
+  scope :upcoming_events, -> { where('date >= ?', Time.now).order(date: :asc) }
+
   scope :organized_by_user, ->(user) do
     where(organizer_id: user.id)
   end

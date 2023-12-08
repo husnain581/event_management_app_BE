@@ -44,7 +44,7 @@ module Api
     
       def add_user_to_events
         begin 
-          # raise ActionController::ParameterMissing unless params["event_id"].present?
+          raise ActionController::ParameterMissing.new("event_id") unless params["event_id"].present?
           event = Event.find_by(id: params["event_id"])
           if event.present?
             event_user = EventUser.new(event_id: event.id, user_id: current_user.id)
@@ -54,7 +54,7 @@ module Api
               render json: event_user.errors, status: :unprocessable_entity
             end
           else
-            render json: "Event Not Found", status: :unprocessable_entity
+            render json: 'Event Not Found', status: :unprocessable_entity
           end
         rescue ActionController::ParameterMissing => exception
           render json: exception
@@ -62,7 +62,7 @@ module Api
       end
     
       def get_events
-        not_joined_events = Event.not_joined_by_user(current_user).not_organized_by_user(current_user)
+        not_joined_events = Event.upcoming_events.not_joined_by_user(current_user).not_organized_by_user(current_user)
         if not_joined_events.present?
           render json: EventSerializer.new(not_joined_events).serializable_hash[:data].pluck(:attributes), status: 200
         else

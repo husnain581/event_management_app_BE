@@ -94,5 +94,24 @@ RSpec.describe Event, type: :model do
         expect(result).not_to include(event)
       end
     end
+
+    describe '.upcoming_events' do
+      let!(:past_event) { create(:event, date: 1.day.ago) }
+      let!(:upcoming_event1) { create(:event, date: 1.day.from_now) }
+      let!(:upcoming_event2) { create(:event, date: 3.days.from_now) }
+  
+      it 'returns only upcoming events' do
+        upcoming_events = Event.upcoming_events
+  
+        expect(upcoming_events).to include(upcoming_event1, upcoming_event2)
+        expect(upcoming_events).not_to include(past_event)
+      end
+  
+      it 'returns events ordered by date in ascending order' do
+        upcoming_events = Event.upcoming_events
+  
+        expect(upcoming_events).to eq([upcoming_event1, upcoming_event2])
+      end
+    end
   end
 end
