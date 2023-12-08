@@ -1,24 +1,54 @@
-# README
+# Event Management Application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Introduction
+This Event Management Application is a Ruby on Rails web application designed to simplify the process of creating, viewing, and joining events. It features a user-friendly interface along with an API endpoint for managing event data. This project showcases CRUD operations, authentication, and a clean, responsive UI/UX.
 
-Things you may want to cover:
+## Technology Stack
+- **Framework:** Ruby on Rails 7.1.2
+- **Language:** Ruby 3.2.2
+- **Database:** PostgreSQL / SQLite
+- **Frontend:** HTML, CSS/SCSS, JavaScript
+- **Testing:** RSpec, FactoryBot, Faker
 
-* Ruby version
+## Features
+- User authentication (Sign up, Log in, Log out) using Devise.
+- Event management (Create, Read, Update, Delete).
+- RESTful API endpoints for event operations.
+- Interactive and responsive user interface.
+- JSON data exchange format for API.
 
-* System dependencies
+## Setup and Installation
+1. **Clone the Repository:**
+   ```bash
+   git clone [repository-url]
+   ```
+2. **Install Dependencies:**
+   ```bash
+   bundle install
+   ```
+3. **Database Setup:**
+   ```bash
+   rails db:create db:migrate
+   ```
+4. **Run the Server:**
+   ```bash
+   rails server
+   ```
 
-* Configuration
+## API Endpoints
+- **User Authentication:** 
+  - Signup: `POST /signup`
+  - Login: `POST /login`
+  - Logout: `DELETE /logout`
+- **Event Operations:** 
+  - List all events: `GET /api/v1/events`
+  - Create new event: `POST /api/v1/events`
+  - Show an event: `GET /api/v1/events/:id`
+  - Update an event: `PUT /api/v1/events/:id`
+  - Delete an event: `DELETE /api/v1/events/:id`
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Running Tests
+Execute the following command to run the suite of tests:
+```bash
+bundle exec rspec
+```
