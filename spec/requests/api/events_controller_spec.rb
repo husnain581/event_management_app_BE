@@ -93,7 +93,7 @@ RSpec.describe Api::V1::EventsController, type: :request do
       event = create(:event, organizer: user)
 
       sign_in user
-      put "/api/v1/events/#{event.id}", params: { event: { name: 'Updated Event Name' } }
+      put "/api/v1/events/#{event.id}", params: { event: { name: 'The Historical Development of the Heart from Its Formation From Conference' } }
 
       expect(response).to have_http_status(:unprocessable_entity)
     end
