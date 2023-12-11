@@ -26,5 +26,13 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
   gem 'jsonapi-rspec'
+
+  gem "capistrano", require: false
+  gem "capistrano-rails", require: false
+  gem 'capistrano-rbenv'
+  gem 'capistrano-passenger'
+  gem 'sshkit-sudo'
+  gem 'ed25519'# Required for cap deploy
+  gem 'bcrypt_pbkdf'# Required for cap deploy
 end
 
