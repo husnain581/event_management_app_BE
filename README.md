@@ -20,7 +20,7 @@ This Event Management Application is a Ruby on Rails web application designed to
 ## Setup and Installation
 1. **Clone the Repository:**
    ```bash
-   git clone [repository-url]
+   git clone https://github.com/husnain581/event_management_app_BE.git
    ```
 2. **Install Dependencies:**
    ```bash
